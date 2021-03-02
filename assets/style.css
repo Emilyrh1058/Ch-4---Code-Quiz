@@ -1,0 +1,11 @@
+.intro h1 {
+    color: navy;
+    font-size: 50px;
+    font-weight: 150;
+    text-align: center;
+}
+
+.intro p {
+    font-size: 20px;
+    text-align: center;
+}
