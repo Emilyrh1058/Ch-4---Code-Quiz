@@ -23,4 +23,7 @@ body {
    background-color:grey;
 }
 
+.hide {
+    display: none;
+}
 

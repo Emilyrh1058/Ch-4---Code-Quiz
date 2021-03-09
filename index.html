@@ -10,13 +10,16 @@
 
     <body>
         <div class="container">
-            <header>
+            <nav class="nav-bar">
+                <div class="timer hide" id="quiz-timer"></div>
+            </nav>
+            <header class="intro">
                 <h1>Welcome to Code Quiz!</h1>
                 <p>This is a timed quiz of 30 seconds. Good luck!</p>
             </header>
 
-            <section id="main-quiz">
-                <div class="timer" id="quiz-timer">30</div>
+            <section class="hide" id="main-quiz">
+               
                 
                 <div id="question-container">Question</div>
                 
@@ -38,7 +41,7 @@
             </div>
         </section>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     
         <script src="./assets/script.js"></script>
     </body>
