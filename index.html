@@ -1,48 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>Code Quiz</title>
-        <link rel="stylesheet" href="./assets/style.css" />
-    </head>
 
-    <body>
-        <div class="container">
-            <nav class="nav-bar">
-                <div class="timer hide" id="quiz-timer"></div>
-            </nav>
-            <header class="intro">
-                <h1>Welcome to Code Quiz!</h1>
-                <p>This is a timed quiz of 30 seconds. Good luck!</p>
-                <button id="beginBtn">Let's Begin</button>
-            </header>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./assets/style.css" />
+    <title>Code Quiz</title>
+</head>
 
-            <section class="hide" id="main-quiz">
-                <div id="question-container">Question</div>
-                <div id="firstQuestion">What does HTML stand for?</div>
-               
-                <div id="answers-container">
-                    <div class="answer" data-content="A">answer.</div>
-                    <div class="answer" data-content="B">answer.</div>
-                    <div class="answer" data-content="C">answer.</div>
-                    <div class="answer" data-content="D">answer.</div>
-                </div>
-                
-                <div class="explain" id="answer-response">explanation to answer.</div>
-            
-                <button id="nextBtn">Next></button>
-            </section>
-
+<body>
+    <header class="welcome">
+        <p>Code Quiz</p>
+        <div class="timer hide" id="quiz-timer"></div>
+    </header>
+    <section class="intro">
+        <div>
+            <h1>This is a timed quiz of 30 seconds. Good luck!</h1>
         </div>
+        <div>
+            <button class="beginBtn">Let's Begin</button>
+        </div>
+    </section>
+    <section class="main-quiz">
+        <div id="question-container"></div>
+        <div class="answers-container"></div>
+        <div class="explain" id="answer-response">explanation to answer.</div>
+    </section>
+    <section class="end hide">
+        <h1>You're finished! Please enter your name for your score</h1>
+        <input type="name">
+        <ul></ul>
+    </section>
+    <script src="./assets/script.js"></script>
+</body>
 
-            
-            <h2 id="countdown"></h2>
-            <p id="main"></p>
-            </div>
-    
-        <script src="./assets/script.js"></script>
-    </body>
-    
 </html>
