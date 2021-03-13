@@ -1,6 +1,10 @@
 // INTRO
 var introEl = document.querySelector(".intro");
 
+
+var feedbackEl = document.querySelector(".explain")
+var nextButton = document.querySelector(".next")
+
 // QUESTIONS - GLOBAL
 var questions = [
   {
@@ -54,7 +58,7 @@ var answerEl = document.querySelector(".answers-container");
 //TIMER - GLOBAL
 var timerEl = document.querySelector(".timer");
 var timeAllotted = 60;
-var buttonEl = document.querySelector(".beginBtn")
+var beginBtn = document.querySelector(".beginBtn")
 var endEl = document.querySelector(".end")
 var timer = function() {
   time = time - 1;
@@ -85,27 +89,51 @@ function init() {
 
 // START QUIZ
 var launchQuestion = function(){
+  nextButton.classList.add("hide")
+  feedbackEl.classList.add("hide")
   var currentQuestion = questions[questionIndex]
   var questionText = document.getElementById("question-container")
   questionText.textContent = currentQuestion.question
   answerEl.innerHTML = ""
   
-  currentQuestion.choices.forEach(function(choice, index) {
+  currentQuestion.choices.forEach(function(choice) {
     var choiceBtn = document.createElement("button")
     choiceBtn.setAttribute("class", "choice")
     choiceBtn.setAttribute("value", choice)
-    choiceBtn.textContent = index + 1 + " " + choice
-    choiceBtn.onclick = launchQuestion
+    choiceBtn.textContent = choice
+    choiceBtn.addEventListener("click", analyzeAnswer)
+
     answerEl.appendChild(choiceBtn)
   } )
+}
 
-  for (var i = 0; i < questions.length; i++) {
-  console.log(questions[i].question); }
+function analyzeAnswer() {
+  feedbackEl.classList.remove("hide")
+if (this.value === questions[questionIndex].answer) {
+  console.log("Right")
+  timeAllotted = timeAllotted + 10;
+  feedbackEl.textContent = "Right"
+} else {
+  console.log("Wrong")
+  timeAllotted = timeAllotted - 15;
+  feedbackEl.textContent = "Wrong"
+}
+nextButton.classList.remove("hide")
+nextButton.addEventListener("click", nextQuestion)
 }
 
 function nextQuestion(){
+questionIndex = questionIndex + 1
 
+if (questions[questionIndex] === undefined) {
+endQuiz()
+} else {
+  launchQuestion()
 }
-
-buttonEl.onclick = init
-questionEl.addEventListener("click", nextQuestion);
+}
+function endQuiz() {
+ questionEl.classList.add("hide")
+ endEl.classList.remove("hide")
+}
+beginBtn.addEventListener("click", init)
+//questionEl.addEventListener("click", nextQuestion);
