@@ -47,7 +47,7 @@ var introEl = document.querySelector(".intro");
 var timerEl = document.querySelector(".timer");
 var buttonEl = document.querySelector(".beginBtn")
 var endEl = document.querySelector(".end")
-//var questionIndex = 0
+var questionIndex = 0
 
 function startTimer() {
     var timerInterval = setInterval(function(){
@@ -63,7 +63,7 @@ function init() {
     questionEl.classList.remove("hide")
     introEl.classList.add("hide")
     timerEl.classList.remove("hide")
-    // startTimer()
+    startTimer()
     launchQuestion()
 }
 
@@ -83,8 +83,8 @@ function launchQuestion(){
   } )
 
   for (var i = 0; i < questionBank.length; i++) {
-  console.log(questionBank[i].question);
+  console.log(questionBank[i].question); }
 }
-}
+
 
 buttonEl.onclick = init
