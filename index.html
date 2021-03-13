@@ -10,29 +10,35 @@
 </head>
 
 <body>
+
     <header class="welcome">
-        <p>Code Quiz</p>
+        <h1>Welcome to Code Quiz</h1>
         <div class="timer hide" id="quiz-timer"></div>
     </header>
+
     <section class="intro">
         <div>
-            <h1>This is a timed quiz of 30 seconds. Good luck!</h1>
+            <h1>You will have 60 seconds to answer 5 simple code questions. For each correct answer you will gain 10 seconds. Every incorrenct answer will result in a 15 second deduction. Your final score is determined by the remaining time.</h1>
         </div>
         <div>
             <button class="beginBtn">Let's Begin</button>
         </div>
     </section>
+
     <section class="main-quiz">
         <div id="question-container"></div>
         <div class="answers-container"></div>
-        <div class="explain" id="answer-response">explanation to answer.</div>
+        <div class="explain" id="answer-response"></div>
     </section>
+
     <section class="end hide">
-        <h1>You're finished! Please enter your name for your score</h1>
+        <h1>Well done! Enter your name to view your score.</h1>
         <input type="name">
         <ul></ul>
     </section>
+
     <script src="./assets/script.js"></script>
+
 </body>
 
 </html>
