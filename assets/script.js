@@ -1,4 +1,8 @@
-var questionBank = [
+// INTRO
+var introEl = document.querySelector(".intro");
+
+// QUESTIONS - GLOBAL
+var questions = [
   {
     question: "What does HTML stand for?",
     choices: ["HyperText Markup Language",
@@ -40,14 +44,25 @@ var questionBank = [
     answer: "Variable",
   },
 ];
-var timeAllotted = 60;
 var questionEl = document.querySelector(".main-quiz");
+var questionIndex = 0
+var time = questions.length * 10;
+
+//ANSWERS - GLOBAL
 var answerEl = document.querySelector(".answers-container");
-var introEl = document.querySelector(".intro");
+
+//TIMER - GLOBAL
 var timerEl = document.querySelector(".timer");
+var timeAllotted = 60;
 var buttonEl = document.querySelector(".beginBtn")
 var endEl = document.querySelector(".end")
-var questionIndex = 0
+var timer = function() {
+  time = time - 1;
+  timerEl.textContent = time;
+  if (time <0) {
+    endQuiz();
+  }
+}
 
 function startTimer() {
     var timerInterval = setInterval(function(){
@@ -59,6 +74,7 @@ function startTimer() {
      }, 1000);
 }
 
+// ADD AND REMOVE
 function init() {
     questionEl.classList.remove("hide")
     introEl.classList.add("hide")
@@ -67,8 +83,9 @@ function init() {
     launchQuestion()
 }
 
-function launchQuestion(){
-  var currentQuestion = questionBank[questionIndex]
+// START QUIZ
+var launchQuestion = function(){
+  var currentQuestion = questions[questionIndex]
   var questionText = document.getElementById("question-container")
   questionText.textContent = currentQuestion.question
   answerEl.innerHTML = ""
@@ -82,9 +99,13 @@ function launchQuestion(){
     answerEl.appendChild(choiceBtn)
   } )
 
-  for (var i = 0; i < questionBank.length; i++) {
-  console.log(questionBank[i].question); }
+  for (var i = 0; i < questions.length; i++) {
+  console.log(questions[i].question); }
 }
 
+function nextQuestion(){
+
+}
 
 buttonEl.onclick = init
+questionEl.addEventListener("click", nextQuestion);
