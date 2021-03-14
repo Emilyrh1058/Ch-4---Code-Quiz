@@ -32,11 +32,48 @@
         <button class="next hide">Next</button>
     </section>
 
-    <section class="end hide">
-        <h1>Well done! Enter your name to view your score.</h1>
-        <input type="name">
-        <ul></ul>
+    <section class="end hide" id="scoreLog">
+        <h1>Well done! Enter your initials to view your score.</h1>
+         <div class="enterInitials">
+            <input type="text" placeholder="Your Initials" name="initials" id="initials">
+        </div>
+        <button class="submitBtn">View Score</button>
+    </section>   
+
+    <section class="score hide">
+        <h2 id="score">Final Score:</h2>
+        </div>
+        <div class="highScore">
+            <h3 id="highScore"> </h3>
+        </div>
+        <div class="choices">
+            <button id="save" class="save">
+                Save
+            </button>
+            <button id="tryAgain" class="tryAgain">
+                Try Again
+            </button>
     </section>
+
+    <section class="finalPage hide" id="final">
+        <div class="yourBest">
+            <h2 id="yourBest">Your Scores</h2>
+        </div>
+        <div>
+            <ul id="finalLog" class="finalLog">
+    
+            </ul>
+       </div>
+        <button id="restart" class="restart">
+            Play Again!
+        </button>
+    </div>
+
+    </section>
+    
+
+
+
 
     <script src="./assets/script.js"></script>
 

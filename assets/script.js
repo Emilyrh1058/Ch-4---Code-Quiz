@@ -1,11 +1,27 @@
-// INTRO
 var introEl = document.querySelector(".intro");
-
-
 var feedbackEl = document.querySelector(".explain")
 var nextButton = document.querySelector(".next")
+var answerEl = document.querySelector(".answers-container");
+var timerEl = document.querySelector(".timer");
+var timeAllotted = 60;
+var beginBtn = document.querySelector(".beginBtn")
+var endEl = document.querySelector(".end")
+var submitBtn = document.querySelector(".submitBtn")
+var scoreLog = document.getElementById("#scoreLog")
+var finalPageEl = document.querySelector(".finalPage")
+var highscorePage = document.querySelector(".highScore")
+var playAgain = document.querySelector(".restart")
+var again = document.querySelector(".tryAgain")
+var timer = function() {
+  time = time - 1;
+  timerEl.textContent = time;
+  if (time <0) {
+    endQuiz();
+  }
+}
 
-// QUESTIONS - GLOBAL
+
+// QUESTIONS ARRAY
 var questions = [
   {
     question: "What does HTML stand for?",
@@ -48,25 +64,10 @@ var questions = [
     answer: "Variable",
   },
 ];
+
 var questionEl = document.querySelector(".main-quiz");
 var questionIndex = 0
 var time = questions.length * 10;
-
-//ANSWERS - GLOBAL
-var answerEl = document.querySelector(".answers-container");
-
-//TIMER - GLOBAL
-var timerEl = document.querySelector(".timer");
-var timeAllotted = 60;
-var beginBtn = document.querySelector(".beginBtn")
-var endEl = document.querySelector(".end")
-var timer = function() {
-  time = time - 1;
-  timerEl.textContent = time;
-  if (time <0) {
-    endQuiz();
-  }
-}
 
 function startTimer() {
     var timerInterval = setInterval(function(){
@@ -78,16 +79,15 @@ function startTimer() {
      }, 1000);
 }
 
-// ADD AND REMOVE
 function init() {
     questionEl.classList.remove("hide")
     introEl.classList.add("hide")
     timerEl.classList.remove("hide")
+    finalPageEl.classList.add('hide')
     startTimer()
     launchQuestion()
 }
 
-// START QUIZ
 var launchQuestion = function(){
   nextButton.classList.add("hide")
   feedbackEl.classList.add("hide")
@@ -98,42 +98,95 @@ var launchQuestion = function(){
   
   currentQuestion.choices.forEach(function(choice) {
     var choiceBtn = document.createElement("button")
-    choiceBtn.setAttribute("class", "choice")
-    choiceBtn.setAttribute("value", choice)
-    choiceBtn.textContent = choice
-    choiceBtn.addEventListener("click", analyzeAnswer)
-
-    answerEl.appendChild(choiceBtn)
+      choiceBtn.setAttribute("class", "choice")
+      choiceBtn.setAttribute("value", choice)
+      choiceBtn.textContent = choice
+      choiceBtn.addEventListener("click", analyzeAnswer)
+      answerEl.appendChild(choiceBtn)  
   } )
 }
 
 function analyzeAnswer() {
   feedbackEl.classList.remove("hide")
-if (this.value === questions[questionIndex].answer) {
-  console.log("Right")
-  timeAllotted = timeAllotted + 10;
-  feedbackEl.textContent = "Right"
-} else {
-  console.log("Wrong")
-  timeAllotted = timeAllotted - 15;
-  feedbackEl.textContent = "Wrong"
-}
-nextButton.classList.remove("hide")
-nextButton.addEventListener("click", nextQuestion)
+  if (this.value === questions[questionIndex].answer) {
+    console.log("Right")
+    timeAllotted = timeAllotted + 10;
+    feedbackEl.textContent = "Right"
+  } else {
+    console.log("Wrong")
+    timeAllotted = timeAllotted - 15;
+    feedbackEl.textContent = "Wrong"
+  }
+  nextButton.classList.remove("hide")
+  nextButton.addEventListener("click", nextQuestion)
 }
 
 function nextQuestion(){
-questionIndex = questionIndex + 1
+  questionIndex = questionIndex + 1
+  if (questions[questionIndex] === undefined) {
+    endQuiz()
+  } else {
+    launchQuestion()
+  }
+}
 
-if (questions[questionIndex] === undefined) {
-endQuiz()
-} else {
-  launchQuestion()
-}
-}
 function endQuiz() {
- questionEl.classList.add("hide")
- endEl.classList.remove("hide")
+  questionEl.classList.add("hide")
+  endEl.classList.remove("hide")
 }
+
+function viewScore() {
+  document.getElementById("log")
+  document.getElementById("finale")
+  highscore = document.getElementById("highScore").innerHTML 
+  initials = document.getElementById("initials").value
+  if (initials <= 0){
+      window.alert("Must put in your Initials")
+      return;
+  }
+
+  let logScores = JSON.parse(localStorage.getItem("yourScores")) || [];
+  let numbers = {Initials: initials, Score: highscore} 
+  logScores.push(numbers)
+  console.log(logScores)
+  setScore(logScores)
+  localStorage.setItem("yourScores", JSON.stringify(logScores))
+};
+
+function setScore(logScores) {
+  for (var i = 0; i < logScores.length; i++) {
+      var logScore = document.getElementById("finalLog")
+      var ulScores = document.createElement("li")
+        ulScores.setAttribute('class', 'yourScores')
+        ulScores.textContent = logScores[i].Score
+        finalLog.appendChild(ulScores)
+      var ulInitials = document.createElement('li')
+        ulInitials.setAttribute('class', 'yourInitials')
+        ulInitials.textContent = logScores[i].Initials;
+        finalLog.appendChild(ulInitials)
+  }
+}
+
+function highscores() {
+  document.getElementById("intro")
+  document.getElementById("finale")
+  var getScore = JSON.parse(localStorage.getItem("yourScores"));
+    setScore(getScore)
+    console.log(getScore)
+};
+
+var reload = function() {
+  location.href = "https://emilyrh1058.github.io/code-quiz/"
+}
+
+var tryAgain = function() {
+  location.href = "https://emilyrh1058.github.io/code-quiz/"
+}
+
+
 beginBtn.addEventListener("click", init)
-//questionEl.addEventListener("click", nextQuestion);
+submitBtn.addEventListener("click", endQuiz)
+save.addEventListener("click", viewScore)
+highscorePage.addEventListener("click", highScore)
+playAgain.addEventListener("click", reload)
+again.addEventListener("click", reload) 
