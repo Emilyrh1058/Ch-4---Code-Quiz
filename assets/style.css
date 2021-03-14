@@ -2,7 +2,7 @@ body {
     background-color: grey;
 }
 
-.h1 {
+.welcome h1 {
     color: navy;
     text-align: center;
     margin: auto;
@@ -20,7 +20,7 @@ body {
    top: 25%;
    left: 50%;
    padding: 10px 16px;
-   background-color:grey;
+   background-color:white;
 }
 
 .hide {
