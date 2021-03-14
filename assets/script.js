@@ -7,11 +7,13 @@ var timeAllotted = 60;
 var beginBtn = document.querySelector(".beginBtn")
 var endEl = document.querySelector(".end")
 var submitBtn = document.querySelector(".submitBtn")
-var scoreLog = document.getElementById("#scoreLog")
+var score = document.querySelector(".score")
 var finalPageEl = document.querySelector(".finalPage")
 var highscorePage = document.querySelector(".highScore")
 var playAgain = document.querySelector(".restart")
 var again = document.querySelector(".tryAgain")
+var initials = document.getElementById("initials")
+var timerInterval;
 var timer = function() {
   time = time - 1;
   timerEl.textContent = time;
@@ -20,8 +22,6 @@ var timer = function() {
   }
 }
 
-
-// QUESTIONS ARRAY
 var questions = [
   {
     question: "What does HTML stand for?",
@@ -69,22 +69,22 @@ var questionEl = document.querySelector(".main-quiz");
 var questionIndex = 0
 var time = questions.length * 10;
 
-function startTimer() {
-    var timerInterval = setInterval(function(){
-        timerEl.textContent = timeAllotted;
-        timeAllotted = timeAllotted-1;
-        if (timeAllotted === 0) {
-            clearInterval(timerInterval)
-        }
-     }, 1000);
-}
+// function startTimer() {
+//     var timerInterval = setInterval(function(){
+//         timerEl.textContent = timeAllotted;
+//         timeAllotted = timeAllotted-1;
+//         if (timeAllotted === 0 ) {
+//             clearInterval(timerInterval)
+//         }
+//      }, 1000);
+// }
 
 function init() {
     questionEl.classList.remove("hide")
     introEl.classList.add("hide")
     timerEl.classList.remove("hide")
-    finalPageEl.classList.add('hide')
-    startTimer()
+    timerInterval = setInterval(timer, 1000)
+    timerInterval.textContent = time;
     launchQuestion()
 }
 
@@ -125,6 +125,7 @@ function nextQuestion(){
   questionIndex = questionIndex + 1
   if (questions[questionIndex] === undefined) {
     endQuiz()
+    
   } else {
     launchQuestion()
   }
@@ -133,29 +134,37 @@ function nextQuestion(){
 function endQuiz() {
   questionEl.classList.add("hide")
   endEl.classList.remove("hide")
+  clearInterval(timerInterval)
 }
 
+// CURRENTLY WORKING ON THIS //
 function viewScore() {
   document.getElementById("log")
-  document.getElementById("finale")
+  document.getElementById("final")
   highscore = document.getElementById("highScore").innerHTML 
-  initials = document.getElementById("initials").value
-  if (initials <= 0){
-      window.alert("Must put in your Initials")
-      return;
-  }
+  if (user !== "") {
+    window.alert("Must put in your Initials")
+    return;
 
-  let logScores = JSON.parse(localStorage.getItem("yourScores")) || [];
-  let numbers = {Initials: initials, Score: highscore} 
-  logScores.push(numbers)
-  console.log(logScores)
-  setScore(logScores)
-  localStorage.setItem("yourScores", JSON.stringify(logScores))
+  }
+    let logScores = JSON.parse(localStorage.getItem("yourScores")) || [];
+    let numbers = {
+      userInitials: user, 
+      score: time} 
+    logScores.push(numbers)
+    console.log(logScores)
+        localStorage.setItem("yourScores", JSON.stringify(logScores))
+      logScores.forEach(function(numbers) {
+        var ulScores = document.createElement("li")
+        ulScores.textContent = numbers.userInitials + ": " + numbers.score
+        var logScore = document.getElementById("finalLog")
+        logScore.appendChild(ulScores)
+      })
+    setScore(logScores)
 };
 
 function setScore(logScores) {
   for (var i = 0; i < logScores.length; i++) {
-      var logScore = document.getElementById("finalLog")
       var ulScores = document.createElement("li")
         ulScores.setAttribute('class', 'yourScores')
         ulScores.textContent = logScores[i].Score
@@ -163,17 +172,18 @@ function setScore(logScores) {
       var ulInitials = document.createElement('li')
         ulInitials.setAttribute('class', 'yourInitials')
         ulInitials.textContent = logScores[i].Initials;
+        var logScore = document.getElementById("finalLog")
         finalLog.appendChild(ulInitials)
   }
 }
 
 function highscores() {
-  document.getElementById("intro")
-  document.getElementById("finale")
+  document.getElementById("final")
   var getScore = JSON.parse(localStorage.getItem("yourScores"));
     setScore(getScore)
     console.log(getScore)
 };
+
 
 var reload = function() {
   location.href = "https://emilyrh1058.github.io/code-quiz/"
@@ -186,7 +196,7 @@ var tryAgain = function() {
 
 beginBtn.addEventListener("click", init)
 submitBtn.addEventListener("click", endQuiz)
-save.addEventListener("click", viewScore)
+initials.addEventListener("click", viewScore)
 highscorePage.addEventListener("click", highScore)
 playAgain.addEventListener("click", reload)
 again.addEventListener("click", reload) 
