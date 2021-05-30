@@ -1,27 +1,44 @@
-var introEl = document.querySelector(".intro");
-var feedbackEl = document.querySelector(".explain")
-var nextButton = document.querySelector(".next")
-var answerEl = document.querySelector(".answers-container");
-var timerEl = document.querySelector(".timer");
-var timeAllotted = 60;
-var beginBtn = document.querySelector(".beginBtn")
-var endEl = document.querySelector(".end")
-var submitBtn = document.querySelector(".submitBtn")
-var score = document.querySelector(".score")
-var finalPageEl = document.querySelector(".finalPage")
-var highscorePage = document.querySelector(".highScore")
-var playAgain = document.querySelector(".restart")
-var again = document.querySelector(".tryAgain")
+// DOM
+var timerEl = document.getElementById('#timer');
+var highscoreEl = document.getElementById('#show-high-score');
+var introEl = document.getElementById('#intro-content');
+var beginQuiz = document.getElementById('#begin-quiz');
+var answerEl = document.getElementById("#answers");
+var feedbackEl = document.querySelector(".feedback");
+var scoreEl = document.getElementById('#your-score');
+var highScoreEl = document.getElementById('#high-scores');
+var scoreBtns = document.querySelector('.score-buttons');
 var initials = document.getElementById("initials")
-var timerInterval;
-var timer = function() {
-  time = time - 1;
-  timerEl.textContent = time;
-  if (time <0) {
-    endQuiz();
-  }
-}
 
+
+
+// var nextButton = document.querySelector(".next")
+// var timeAllotted = 60;
+// var beginBtn = document.querySelector(".beginBtn")
+// var endEl = document.querySelector(".end")
+// var submitBtn = document.querySelector(".submitBtn")
+// var finalPageEl = document.querySelector(".finalPage")
+// var highscorePage = document.querySelector(".highScore")
+// var playAgain = document.querySelector(".restart")
+// var again = document.querySelector(".tryAgain")
+// var timerInterval;
+// var timer = function() {
+//   time = time - 1;
+//   timerEl.textContent = time;
+//   if (time <0) {
+//     endQuiz();
+//   }
+// }
+
+// GLOBAL / TIMER
+
+var timer = 60;
+var timerNum = 0;
+var score = 0;
+var highScoreList = [];
+
+
+// QUESTIONS
 var questions = [
   {
     question: "What does HTML stand for?",
@@ -40,7 +57,7 @@ var questions = [
     answer: "CSS",
   },
   {
-    question: "What's the differenct between a <ul> and a <ol>?",
+    question: "What's the difference between a <ul> and a <ol>?",
     choices: ["underline vs overline", 
               "undefined link vs onclick link", 
               "unordered list vs ordered list", 
@@ -65,126 +82,129 @@ var questions = [
   },
 ];
 
-var questionEl = document.querySelector(".main-quiz");
-var questionIndex = 0
-var time = questions.length * 10;
 
-// function startTimer() {
-//     var timerInterval = setInterval(function(){
-//         timerEl.textContent = timeAllotted;
-//         timeAllotted = timeAllotted-1;
-//         if (timeAllotted === 0 ) {
-//             clearInterval(timerInterval)
-//         }
-//      }, 1000);
+
+
+
+
+
+
+
+
+
+
+
+// var questionEl = document.querySelector(".main-quiz");
+// var questionIndex = 0
+// var time = questions.length * 10;
+
+
+// function init() {
+//     questionEl.classList.remove("hide")
+//     introEl.classList.add("hide")
+//     timerEl.classList.remove("hide")
+//     timerInterval = setInterval(timer, 1000)
+//     timerInterval.textContent = time;
+//     launchQuestion()
 // }
 
-function init() {
-    questionEl.classList.remove("hide")
-    introEl.classList.add("hide")
-    timerEl.classList.remove("hide")
-    timerInterval = setInterval(timer, 1000)
-    timerInterval.textContent = time;
-    launchQuestion()
-}
-
-var launchQuestion = function(){
-  nextButton.classList.add("hide")
-  feedbackEl.classList.add("hide")
-  var currentQuestion = questions[questionIndex]
-  var questionText = document.getElementById("question-container")
-  questionText.textContent = currentQuestion.question
-  answerEl.innerHTML = ""
+// var launchQuestion = function(){
+//   nextButton.classList.add("hide")
+//   feedbackEl.classList.add("hide")
+//   var currentQuestion = questions[questionIndex]
+//   var questionText = document.getElementById("question-container")
+//   questionText.textContent = currentQuestion.question
+//   answerEl.innerHTML = ""
   
-  currentQuestion.choices.forEach(function(choice) {
-    var choiceBtn = document.createElement("button")
-      choiceBtn.setAttribute("class", "choice")
-      choiceBtn.setAttribute("value", choice)
-      choiceBtn.textContent = choice
-      choiceBtn.addEventListener("click", analyzeAnswer)
-      answerEl.appendChild(choiceBtn)  
-  } )
-}
+//   currentQuestion.choices.forEach(function(choice) {
+//     var choiceBtn = document.createElement("button")
+//       choiceBtn.setAttribute("class", "choice")
+//       choiceBtn.setAttribute("value", choice)
+//       choiceBtn.textContent = choice
+//       choiceBtn.addEventListener("click", analyzeAnswer)
+//       answerEl.appendChild(choiceBtn)  
+//   } )
+// }
 
-function analyzeAnswer() {
-  feedbackEl.classList.remove("hide")
-  if (this.value === questions[questionIndex].answer) {
-    console.log("Right")
-    timeAllotted = timeAllotted + 10;
-    feedbackEl.textContent = "Right"
-  } else {
-    console.log("Wrong")
-    timeAllotted = timeAllotted - 15;
-    feedbackEl.textContent = "Wrong"
-  }
-  nextButton.classList.remove("hide")
-  nextButton.addEventListener("click", nextQuestion)
-}
+// function analyzeAnswer() {
+//   feedbackEl.classList.remove("hide")
+//   if (this.value === questions[questionIndex].answer) {
+//     console.log("Right")
+//     timeAllotted = timeAllotted + 10;
+//     feedbackEl.textContent = "Right"
+//   } else {
+//     console.log("Wrong")
+//     timeAllotted = timeAllotted - 15;
+//     feedbackEl.textContent = "Wrong"
+//   }
+//   nextButton.classList.remove("hide")
+//   nextButton.addEventListener("click", nextQuestion)
+// }
 
-function nextQuestion(){
-  questionIndex = questionIndex + 1
-  if (questions[questionIndex] === undefined) {
-    endQuiz()
+// function nextQuestion(){
+//   questionIndex = questionIndex + 1
+//   if (questions[questionIndex] === undefined) {
+//     endQuiz()
     
-  } else {
-    launchQuestion()
-  }
-}
+//   } else {
+//     launchQuestion()
+//   }
+// }
 
-function endQuiz() {
-  questionEl.classList.add("hide")
-  endEl.classList.remove("hide")
-  clearInterval(timerInterval)
-}
+// function endQuiz() {
+//   questionEl.classList.add("hide")
+//   endEl.classList.remove("hide")
+//   clearInterval(timerInterval)
+// }
 
-// CURRENTLY WORKING ON THIS //
-function viewScore() {
-  document.getElementById("log")
-  document.getElementById("final")
-  highscore = document.getElementById("highScore").innerHTML 
-  if (user !== "") {
-    window.alert("Must put in your Initials")
-    return;
+// function viewScore() {
+//   document.getElementById("log")
+//   document.getElementById("final")
+//   highscore = document.getElementById("highScore").innerHTML 
+//   if (user !== "") {
+//     window.alert("Must put in your Initials")
+//     return;
 
-  }
-    let logScores = JSON.parse(localStorage.getItem("yourScores")) || [];
-    let numbers = {
-      userInitials: user, 
-      score: time} 
-    logScores.push(numbers)
-    console.log(logScores)
-        localStorage.setItem("yourScores", JSON.stringify(logScores))
-      logScores.forEach(function(numbers) {
-        var ulScores = document.createElement("li")
-        ulScores.textContent = numbers.userInitials + ": " + numbers.score
-        var logScore = document.getElementById("finalLog")
-        logScore.appendChild(ulScores)
-      })
-    setScore(logScores)
-};
+//   }
+//     let logScores = JSON.parse(localStorage.getItem("yourScores")) || [];
+//     let numbers = {
+//       userInitials: user, 
+//       score: time} 
+//     logScores.push(numbers)
+//     console.log(logScores)
+//         localStorage.setItem("yourScores", JSON.stringify(logScores))
+//       logScores.forEach(function(numbers) {
+//         var ulScores = document.createElement("li")
+//         ulScores.textContent = numbers.userInitials + ": " + numbers.score
+//         var logScore = document.getElementById("finalLog")
+//         logScore.appendChild(ulScores)
+//       })
+//     setScore(logScores)
+// };
 
-function setScore(logScores) {
-  for (var i = 0; i < logScores.length; i++) {
-      var ulScores = document.createElement("li")
-        ulScores.setAttribute('class', 'yourScores')
-        ulScores.textContent = logScores[i].Score
-        finalLog.appendChild(ulScores)
-      var ulInitials = document.createElement('li')
-        ulInitials.setAttribute('class', 'yourInitials')
-        ulInitials.textContent = logScores[i].Initials;
-        var logScore = document.getElementById("finalLog")
-        finalLog.appendChild(ulInitials)
-  }
-}
+// function setScore(logScores) {
+//   for (var i = 0; i < logScores.length; i++) {
+//       var ulScores = document.createElement("li")
+//         ulScores.setAttribute('class', 'yourScores')
+//         ulScores.textContent = logScores[i].Score
+//         finalLog.appendChild(ulScores)
+//       var ulInitials = document.createElement('li')
+//         ulInitials.setAttribute('class', 'yourInitials')
+//         ulInitials.textContent = logScores[i].Initials;
+//         var logScore = document.getElementById("finalLog")
+//         finalLog.appendChild(ulInitials)
+//   }
+// }
 
-function highscores() {
-  document.getElementById("final")
-  var getScore = JSON.parse(localStorage.getItem("yourScores"));
-    setScore(getScore)
-    console.log(getScore)
-};
+// function highscores() {
+//   document.getElementById("final")
+//   var getScore = JSON.parse(localStorage.getItem("yourScores"));
+//     setScore(getScore)
+//     console.log(getScore)
+// };
 
 
+// END OF QUIZ
 var reload = function() {
   location.href = "https://emilyrh1058.github.io/code-quiz/"
 }

@@ -10,15 +10,31 @@
 </head>
 
 <body>
-
-    <header class="welcome">
-        <h1>Code Quiz</h1>
-        <div class="timer hide" id="quiz-timer"></div>
+    <header>
+        <div class="timer" id="timer"></div>
+        <div class="show-high-scores" id="show-high-scores"></div>
     </header>
+    <main>
+        <section class="intro-wrapper">
+            <div class="intro-title" id="intro-content"></div>
+        
+            <div class="welcome-text" id="begin-quiz"></div>
 
-    <section class="intro">
-        <div>
-            <h1>You will have 60 seconds to answer 5 simple code questions. For each correct answer you will gain 10 seconds. Every incorrenct answer will result in a 15 second deduction. Your final score is determined by the remaining time.</h1>
+            <div class="final-score-wrapper" id="your-score"></div>
+
+            <div class="answers-wrapper" id="answers"></div>
+
+            <div class="scores-wrapper" id="high-scores"></div>
+
+            <div class="score-buttons"></div>
+
+            <div class="feedback"></div>
+        </section>
+    </main>
+
+
+        <!-- <div>
+            <h1>You will have 60 seconds to answer 5 simple code questions. For each correct answer you will gain 10 seconds. Every incorrect answer will result in a 15 second deduction. Your final score is determined by the remaining time.</h1>
         </div>
         <div>
             <button class="beginBtn">Let's Begin</button>
@@ -34,7 +50,7 @@
 
     <section class="end hide" id="scoreLog">
         <h1>Well done! Enter your initials to view your score.</h1>
-         <div class="enterInitials">
+        <div class="enterInitials">
             <input type="text" placeholder="Your Initials" name="initials" id="initials">
         </div>
         <button class="submitBtn">View Score</button>
@@ -61,16 +77,9 @@
         </div>
         <div>
             <ul id="finalLog" class="finalLog"></ul>
-       </div>
+        </div>
         <button id="restart" class="restart">Play Again!</button>
     </section>
-    
-
-
-
-
-    <script src="./assets/script.js"></script>
-
+    <script src="./assets/script.js"></script> -->
 </body>
-
 </html>
