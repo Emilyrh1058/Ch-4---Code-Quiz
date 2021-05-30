@@ -2,7 +2,7 @@
 var timerEl = document.getElementById('#timer');
 var highscoreEl = document.getElementById('#show-high-score');
 var introEl = document.getElementById('#intro-content');
-var beginQuiz = document.getElementById('#begin-quiz');
+var beginQuizEl = document.getElementById('#begin-quiz');
 var answerEl = document.getElementById("#answers");
 var feedbackEl = document.querySelector(".feedback");
 var scoreEl = document.getElementById('#your-score');
@@ -81,6 +81,26 @@ var questions = [
     answer: "Variable",
   },
 ];
+
+// INTRO PAGE
+var introPage = function() {
+  timer = 60;
+  timerEl.innerHTML = "<p> Time Remaining: " + timer + "</p>"
+  highScoreEl.innerHTML = '<p>VIEW HIGH SCORES</p>';
+
+  var createTitle = document.createElement('h1');
+    createTitle.id = "welcome-title";
+    createTitle.textContent = "Welcome to Code Quiz";
+    introEl.appendChild(createTitle);
+
+  var welcomeText = document.createElement("p");
+    welcomeText.id = "welcome-content";
+    welcomeText.textContent = "You will have 60 seconds to answer 5 simple code questions. Every incorrect answer will result in a 10 second deduction. Your final score is determined by the remaining time."
+    beginQuizEl.appendChild(welcomeText);
+
+  var
+
+}
 
 
 
