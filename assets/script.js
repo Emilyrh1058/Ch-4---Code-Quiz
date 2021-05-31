@@ -1,6 +1,6 @@
 // DOM
 var timerEl = document.getElementById('#timer');
-var highscoreEl = document.getElementById('#show-high-score');
+var viewHighScoreEl = document.getElementById('#show-high-scores');
 var introEl = document.getElementById('#intro-content');
 var beginQuizEl = document.getElementById('#begin-quiz');
 var answerEl = document.getElementById("#answers");
@@ -226,7 +226,7 @@ var saveScores = function() {
 };
 
 var clearPages = function() {
-  highscoreEl.innerHTML = "";
+  viewHighScoreEl.innerHTML = "";
   responseEl.innerHTML = "";
   beginQuizEl.innerHTML = "";
   answerEl.innerHTML = "";
@@ -312,7 +312,7 @@ var startTimer = function() {
 
 // EVENT LISTENERS
 
-highscoreEl.addEventListener("click", scoresLink);
+viewHighScoreEl.addEventListener("click", scoresLink);
 scoreBtns.addEventListener("click", chooseBtn)
 scoreEl.addEventListener("submit", getScore);
 answersEl.addEventListener("click", answerList);
