@@ -85,7 +85,7 @@ var introPage = function() {
 
 // BEGINNING THE QUIZ / VIEWING QUESTIONS
 var beginQuiz = function() {
-  clearAll();
+  clearPages();
   questionsEl = document.createElement('h2');
   questionsEl.id = "questions";
   introEl.appendChild(questionsEl);
@@ -152,14 +152,173 @@ var endQuiz = function() {
     score = 0;
   }
 
-  
-}
+  choice1.remove();
+  choice2.remove();
+  choice3.remove();
+  choice4.remove();
 
+  questionsEl.textContent = "FINISHED!"
+  scoreEl.innerHTML = 
+  `<p> Your final score is " + score + "</p>
+    <div class='initials-form' id='initials-input'>
+      <p>Enter initials here:</p>
+      <input 
+        type='text' 
+        name='initials' 
+        id='initials' 
+        placeholder='Your initials'
+      />
+    <button class='submit-btn'>SUBMIT</button>`;
+};
 
+// SCORES
+var getScore = function(event) {
+  event.preventDefault();
 
+  var yourInitials = document.querySelector("input[name='initials']").value;
+    if (!yourInitials) {
+      alert("Your initials are required to continue.")
+      return false;
+    }
 
+  var savedScores = localStorage.getItem("quizScores");
 
+  var scoreData = {
+    name: yourInitials,
+    score: score
+  }
 
+  if (!savedScores) {
+    highScoreList.push(scoreData);
+    savedScores();
+    clearPages();
+    return viewHighScores();
+  } else {
+    highScoreList = JSON.parse(savedScores);
+    if (highScoreList.length < 1) {
+      highScoreList.push(scoreData);
+      savedScores();
+      clearPages();
+      return viewHighScores();
+    }
+
+    for (i = 0; i < highScoreList.length; i++) {
+      if (highScoreList[i].score < scoreData.score) {
+        highScoreList.splice(i, 0, scoreData);
+        highScoreList = highScoreList.slice(0.5);
+        savedScores();
+        break;
+      } else if (i === (highScoreList.length - 1)) {
+          highScoreList.push(scoreData);
+          highScoreList = highScoreList.slice(0,5);
+          savedScores();
+          break;
+      }
+    }
+  }
+  clearPages();
+  viewHighScores();
+};
+
+var saveScores = function() {
+  localStorage.setItem("quizScores", JSON.stringify(highScoreList));
+
+};
+
+var clearPages = function() {
+  highscoreEl.innerHTML = "";
+  responseEl.innerHTML = "";
+  beginQuizEl.innerHTML = "";
+  answerEl.innerHTML = "";
+  scoreEl.innerHTML = "";
+  introEl.innerHTML = "";
+  scoreBtns.innerHTML = "";
+  return false;
+};
+
+var viewHighScores = function() {
+  highScoreEl.innerHTML = "";
+  timerEl.innerHTML = "";
+
+  var savedHighScores = localStorage.getItem("quizScores");
+    highScoreList = JSON.parse(savedHighScores);
+    questionsEl = document.createElement("h2");
+    questionsEl.id = "question";
+    questionsEl.textContent = "HIGH SCORES";
+    introEl.appendChild(questionsEl);
+
+    for (i = 0; i < highScoreList.length; i++) {
+      var scoresEl = document.createElement("h3");
+      scoresEl.textContent = (i+1) + ". " + highScoreList[i].name + " - " + highScoreList[i].score;
+      highScoreEl.appendChild(scoresEl);
+    }
+
+    scoreBtns.innerHTML = 
+      `<button type = 'button'
+        class = 'score-button'
+        id = 'back'>GO BACK</button>
+      <button type ='button'
+        class = 'score-buttons'
+        id = 'clear'>CLEAR</button>`;
+};
+
+var chooseBtn = function(event) {
+  if (event.target.matches("#clear")) {
+    highScoreList = [];
+    saveScores();
+    clearPages();
+    viewHighScores();
+  }
+};
+
+var scoresLink = function() {
+  if (timer === 60) {
+    clearPages();
+    viewHighScores();
+  } else if (timerNum >= questions.length) {
+      alert("Please enter initials to view high scores!");
+      return false;
+  } else {
+    return false;
+  }
+};
+
+var verifyClick = function(event) {
+  if (event.target.matches(".begin-button")) {
+    startTimer();
+    startQuiz();
+  } else {
+    return false;
+  }
+};
+
+var startTimer = function() {
+  var time = setInterval(function() {
+    if (timer <= 0) {
+      clearInterval(time);
+      timer = 0;
+      timerEl.innerHTML = "<p>TIME: " + timer + "</p>";
+      endQuiz();
+    }
+    if (timerNum >= questions.length) {
+      clearInterval(time);
+    }
+    if ((timerNum < questions.length) && (timer > 0)) {
+      timer -=1;
+    }
+    timerEl.innerHTML = "<p>TIME: " + timer + "</p>";
+  }, 1000);
+};
+
+// EVENT LISTENERS
+
+highscoreEl.addEventListener("click", scoresLink);
+scoreBtns.addEventListener("click", chooseBtn)
+scoreEl.addEventListener("submit", getScore);
+answersEl.addEventListener("click", answerList);
+beginQuizEl.addEventListener("click", verifyClick);
+
+initialScreen();
 
 
 
@@ -277,18 +436,18 @@ var endQuiz = function() {
 
 
 // END OF QUIZ
-var reload = function() {
-  location.href = "https://emilyrh1058.github.io/code-quiz/"
-}
+// var reload = function() {
+//   location.href = "https://emilyrh1058.github.io/code-quiz/"
+// }
 
-var tryAgain = function() {
-  location.href = "https://emilyrh1058.github.io/code-quiz/"
-}
+// var tryAgain = function() {
+//   location.href = "https://emilyrh1058.github.io/code-quiz/"
+// }
 
 
-beginBtn.addEventListener("click", init)
-submitBtn.addEventListener("click", endQuiz)
-initials.addEventListener("click", viewScore)
-highscorePage.addEventListener("click", highScore)
-playAgain.addEventListener("click", reload)
-again.addEventListener("click", reload) 
+// beginBtn.addEventListener("click", init)
+// submitBtn.addEventListener("click", endQuiz)
+// initials.addEventListener("click", viewScore)
+// highscorePage.addEventListener("click", highScore)
+// playAgain.addEventListener("click", reload)
+// again.addEventListener("click", reload) 
