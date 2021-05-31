@@ -1,14 +1,14 @@
 // DOM
-var timerEl = document.getElementById('#timer');
-var viewHighScoreEl = document.getElementById('#show-high-scores');
-var introEl = document.getElementById('#intro-content');
-var beginQuizEl = document.getElementById('#begin-quiz');
-var answerEl = document.getElementById("#answers");
-var responseEl = document.querySelector(".feedback");
-var scoreEl = document.getElementById('#your-score');
-var highScoreEl = document.getElementById('#high-scores');
+var timerEl = document.getElementById('timer');
+var viewHighScoreEl = document.getElementById('show-high-scores');
+var introEl = document.getElementById('intro-content');
+var beginQuizEl = document.getElementById('begin-quiz');
+var answersEl = document.getElementById('answers');
+var responseEl = document.querySelector('.feedback');
+var scoreEl = document.getElementById('your-score');
+var highScoreEl = document.getElementById('high-scores');
 var scoreBtns = document.querySelector('.score-buttons');
-var initials = document.getElementById("initials")
+var initials = document.getElementById('initials')
 
 // TIMER
 var timer = 60;
@@ -63,9 +63,9 @@ var questions = [
 
 // INTRO PAGE
 var introPage = function() {
+  viewHighScoreEl.innerHTML = "<p>VIEW HIGH SCORES</p>";
   timer = 60;
-  timerEl.innerHTML = "<p> Time Remaining: " + timer + "</p>"
-  highScoreEl.innerHTML = '<p>VIEW HIGH SCORES</p>';
+  timerEl.innerHTML = "<p>Time: " + timer + "</p>";
 
   var createTitle = document.createElement('h1');
     createTitle.id = "welcome-title";
@@ -86,28 +86,28 @@ var introPage = function() {
 // BEGINNING THE QUIZ / VIEWING QUESTIONS
 var beginQuiz = function() {
   clearPages();
-  questionsEl = document.createElement('h2');
+  questionsEl = document.createElement("h2");
   questionsEl.id = "questions";
   introEl.appendChild(questionsEl);
     choice1 = document.createElement("button");
     choice1.className = "choice-btn";
     choice1.id = "c1";
-    answerEl.appendChild(choice1);
+    answersEl.appendChild(choice1);
 
     choice2 = document.createElement("button");
     choice2.className = "choice-btn";
     choice2.id = "c2";
-    answerEl.appendChild(choice2);
+    answersEl.appendChild(choice2);
 
     choice3 = document.createElement("button");
     choice3.className = "choice-btn";
     choice3.id = "c3";
-    answerEl.appendChild(choice3);
+    answersEl.appendChild(choice3);
 
     choice4 = document.createElement("button");
     choice4.className = "choice-btn";
     choice4.id = "c4";
-    answerEl.appendChild(choice4);
+    answersEl.appendChild(choice4);
 
   timerNum = 0;
   showQuestion(timerNum);
@@ -127,6 +127,7 @@ var answerList = function(event) {
       var answerId = event.target.id;
         feedbackEl = document.createElement("p");
         feedbackEl.id = "feedback";
+        responseEl.appendChild(feedbackEl);
         if (answerId === questions[timerNum].ca) {
           feedbackEl.textContent = "Correct";
         } else {
@@ -229,7 +230,7 @@ var clearPages = function() {
   viewHighScoreEl.innerHTML = "";
   responseEl.innerHTML = "";
   beginQuizEl.innerHTML = "";
-  answerEl.innerHTML = "";
+  answersEl.innerHTML = "";
   scoreEl.innerHTML = "";
   introEl.innerHTML = "";
   scoreBtns.innerHTML = "";
@@ -269,6 +270,11 @@ var chooseBtn = function(event) {
     clearPages();
     viewHighScores();
   }
+
+  if (event.target.matches("#back")) {
+    clearPages();
+    introPage();
+  }
 };
 
 var scoresLink = function() {
@@ -286,7 +292,7 @@ var scoresLink = function() {
 var verifyClick = function(event) {
   if (event.target.matches(".begin-button")) {
     startTimer();
-    startQuiz();
+    beginQuiz();
   } else {
     return false;
   }
@@ -318,4 +324,4 @@ scoreEl.addEventListener("submit", getScore);
 answersEl.addEventListener("click", answerList);
 beginQuizEl.addEventListener("click", verifyClick);
 
-initialScreen();
+introPage();
