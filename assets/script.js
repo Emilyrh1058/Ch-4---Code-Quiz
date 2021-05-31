@@ -4,34 +4,13 @@ var highscoreEl = document.getElementById('#show-high-score');
 var introEl = document.getElementById('#intro-content');
 var beginQuizEl = document.getElementById('#begin-quiz');
 var answerEl = document.getElementById("#answers");
-var feedbackEl = document.querySelector(".feedback");
+var responseEl = document.querySelector(".feedback");
 var scoreEl = document.getElementById('#your-score');
 var highScoreEl = document.getElementById('#high-scores');
 var scoreBtns = document.querySelector('.score-buttons');
 var initials = document.getElementById("initials")
 
-
-
-// var nextButton = document.querySelector(".next")
-// var timeAllotted = 60;
-// var beginBtn = document.querySelector(".beginBtn")
-// var endEl = document.querySelector(".end")
-// var submitBtn = document.querySelector(".submitBtn")
-// var finalPageEl = document.querySelector(".finalPage")
-// var highscorePage = document.querySelector(".highScore")
-// var playAgain = document.querySelector(".restart")
-// var again = document.querySelector(".tryAgain")
-// var timerInterval;
-// var timer = function() {
-//   time = time - 1;
-//   timerEl.textContent = time;
-//   if (time <0) {
-//     endQuiz();
-//   }
-// }
-
-// GLOBAL / TIMER
-
+// TIMER
 var timer = 60;
 var timerNum = 0;
 var score = 0;
@@ -42,43 +21,43 @@ var highScoreList = [];
 var questions = [
   {
     question: "What does HTML stand for?",
-    choices: ["HyperText Markup Language",
-              "HyperText Markup Locator", 
-              "HyperText Masking Line", 
-              "HateThis Must Leave"],
-    answer: "HyperText Markup Language",
+    choice1: "HyperText Markup Language",
+    choice2: "HyperText Markup Locator",
+    choice3: "HyperText Masking Line",          
+    choice4: "HateThis Must Leave",          
+    answer: "choice1"
   },
   {
     question: "To style a webpage, what language would you use?",
-    choices: ["HTML", 
-              "CSS", 
-              "Spanish", 
-              "Google"],
-    answer: "CSS",
+    choice1: "HTML", 
+    choice2: "CSS",
+    choice3: "Spanish",
+    choice4: "Google",
+    answer: "choice2"
   },
   {
     question: "What's the difference between a <ul> and a <ol>?",
-    choices: ["underline vs overline", 
-              "undefined link vs onclick link", 
-              "unordered list vs ordered list", 
-              "universal language vs older language"],
-    answer: "unordered list vs ordered list",
+    choice1: "underline vs overline",
+    choice2: "undefined link vs onclick link",
+    choice3: "unordered list vs ordered list",
+    choice4: "universal language vs older language",
+    answer: "choice3"
   },
   {
     question: "Where should you place the link to the Javascript file?",
-    choices: ["In the title", 
-              "In the footer", 
-              "At the top of the body section", 
-              "At the bottom of the body section"],
-    answer: "At the bottom of the body section",
+    choice1: "In the title",
+    choice2: "In the footer",
+    choice3: "At the top of the body section",
+    choice4: "At the bottom of the body section",
+    answer: "choice4",
   },
   {
     question: "In Javascript, what doesn't var stand for?",
-    choices: ["Variable", 
-              "Vertical", 
-              "Vacation", 
-              "Vaccinate"],
-    answer: "Variable",
+    choice1: "Variable",
+    choice2: "Vertical",
+    choice3: "Vacation",
+    choice4: "Vaccinate",
+    answer: "choice1",
   },
 ];
 
@@ -98,10 +77,83 @@ var introPage = function() {
     welcomeText.textContent = "You will have 60 seconds to answer 5 simple code questions. Every incorrect answer will result in a 10 second deduction. Your final score is determined by the remaining time."
     beginQuizEl.appendChild(welcomeText);
 
-  var
+  var startQuizBtn = document.createElement('button');
+    startQuizBtn.className = "begin-button";
+    startQuizBtn.textContent = "Begin Quiz";
+    beginQuizEl.appendChild(startQuizBtn);
+};
 
+// BEGINNING THE QUIZ / VIEWING QUESTIONS
+var beginQuiz = function() {
+  clearAll();
+  questionsEl = document.createElement('h2');
+  questionsEl.id = "questions";
+  introEl.appendChild(questionsEl);
+    choice1 = document.createElement("button");
+    choice1.className = "choice-btn";
+    choice1.id = "c1";
+    answerEl.appendChild(choice1);
+
+    choice2 = document.createElement("button");
+    choice2.className = "choice-btn";
+    choice2.id = "c2";
+    answerEl.appendChild(choice2);
+
+    choice3 = document.createElement("button");
+    choice3.className = "choice-btn";
+    choice3.id = "c3";
+    answerEl.appendChild(choice3);
+
+    choice4 = document.createElement("button");
+    choice4.className = "choice-btn";
+    choice4.id = "c4";
+    answerEl.appendChild(choice4);
+
+  timerNum = 0;
+  showQuestion(timerNum);
+};
+
+var showQuestion = function() {
+  questionsEl.textContent = questions[i].question;
+  choice1.textContent = questions[i].choice1;
+  choice2.textContent = questions[i].choice2;
+  choice3.textContent = questions[i].choice3;
+  choice4.textContent = questions[i].choice4;
+};
+
+var answerList = function(event) {
+  if (timer > 0) {
+    if (event.target.matches(".choice-btn")) {
+      var answerId = event.target.id;
+        feedbackEl = document.createElement("p");
+        feedbackEl.id = "feedback";
+        if (answerId === questions[timerNum].ca) {
+          feedbackEl.textContent = "Correct";
+        } else {
+          feedbackEl.textContent = "Wrong";
+          timer -=10;
+        }
+        setTimeout(() => {
+          feedbackEl.remove();
+        }, 500);
+        timerNum++;
+        if (timerNum >= questions.length) {
+          return endQuiz();
+        }
+        showQuestion(timerNum);
+    }
+  }
+};
+
+// END QUIZ
+var endQuiz = function() {
+  score = timer;
+  if (score < 0) {
+    score = 0;
+  }
+
+  
 }
-
 
 
 
