@@ -8,7 +8,7 @@ var responseEl = document.querySelector('.response');
 var scoreEl = document.getElementById('your-score');
 var highScoreEl = document.getElementById('high-scores');
 var scoreBtns = document.querySelector('.score-buttons');
-var initials = document.getElementById('initials')
+var initials = document.getElementById('initials');
 
 // TIMER
 var timer = 60;
@@ -165,7 +165,7 @@ var endQuiz = function() {
     <div class='initials-form' id='initials-input'>
       <p>Enter initials here:</p>
     <input type='text' name='initials' id='initials' placeholder='Your initials'></input>
-    <button class='submit-btn'>SUBMIT</button>`;
+    <button class='submit-btn' id='submit-btn'>SUBMIT</button>`;
 };
 
 // SCORES
@@ -176,7 +176,6 @@ var getScore = function(event) {
       alert("Your initials are required to continue.")
       return false;
     }
-    console.log("getScore")
 
   var savedScores = localStorage.getItem("quizScores");
 
@@ -313,7 +312,6 @@ var startTimer = function() {
 };
 
 // EVENT LISTENERS
-
 viewHighScoreEl.addEventListener("click", scoresLink);
 scoreBtns.addEventListener("click", chooseBtn)
 scoreEl.addEventListener("submit", getScore);
