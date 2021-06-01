@@ -4,7 +4,7 @@ var viewHighScoreEl = document.getElementById('show-high-scores');
 var introEl = document.getElementById('intro-content');
 var beginQuizEl = document.getElementById('begin-quiz');
 var answersEl = document.getElementById('answers');
-var responseEl = document.querySelector('.feedback');
+var responseEl = document.querySelector('.response');
 var scoreEl = document.getElementById('your-score');
 var highScoreEl = document.getElementById('high-scores');
 var scoreBtns = document.querySelector('.score-buttons');
@@ -113,7 +113,7 @@ var beginQuiz = function() {
   showQuestion(timerNum);
 };
 
-var showQuestion = function() {
+var showQuestion = function(i) {
   questionsEl.textContent = questions[i].question;
   choice1.textContent = questions[i].choice1;
   choice2.textContent = questions[i].choice2;
@@ -136,7 +136,7 @@ var answerList = function(event) {
         }
         setTimeout(() => {
           feedbackEl.remove();
-        }, 500);
+        }, 800);
         timerNum++;
         if (timerNum >= questions.length) {
           return endQuiz();
@@ -157,30 +157,26 @@ var endQuiz = function() {
   choice2.remove();
   choice3.remove();
   choice4.remove();
+  responseEl.remove();
 
   questionsEl.textContent = "FINISHED!"
   scoreEl.innerHTML = 
-  `<p> Your final score is " + score + "</p>
+  `<p>Your final score is ` + score + `</p>
     <div class='initials-form' id='initials-input'>
       <p>Enter initials here:</p>
-      <input 
-        type='text' 
-        name='initials' 
-        id='initials' 
-        placeholder='Your initials'
-      />
+    <input type='text' name='initials' id='initials' placeholder='Your initials'></input>
     <button class='submit-btn'>SUBMIT</button>`;
 };
 
 // SCORES
 var getScore = function(event) {
   event.preventDefault();
-
   var yourInitials = document.querySelector("input[name='initials']").value;
     if (!yourInitials) {
       alert("Your initials are required to continue.")
       return false;
     }
+    console.log("getScore")
 
   var savedScores = localStorage.getItem("quizScores");
 
