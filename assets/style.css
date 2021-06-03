@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 :root {
-  --color1: #09bb36;
+  --color1: #0482b4;
   --color2: #0300af;
   --color3: #8d8d8d;
   --color4: #ffffff;
@@ -31,6 +31,7 @@ header {
 .intro-title h1 {
   font-size: 54px;
   text-align: center;
+  text-decoration: underline;
 }
 .intro-title h2 {
   font-size: 48px;
@@ -46,7 +47,7 @@ header {
   padding: 30px 15px 0 15px;
   text-align: center;
 }
-.score-button, .choice-btn, .startQuizBtn, .submit-btn {
+.score-button, .choice-btn, .submit-btn {
   display: flex;
   padding: 5px 20px;
   font-size: 32px;
@@ -56,10 +57,17 @@ header {
   border: solid 5px var(--color1);
   border-radius: 8px;
 }
-.startQuizBtn {
+.begin-button {
   width: 200px;
   justify-content: center;
   margin: 40px 0;
+  display: flex;
+  padding: 5px 20px;
+  font-size: 25px;
+  background-color: var(--color1);
+  color: var(--color4);
+  border: solid 5px var(--color1);
+  border-radius: 8px;
 }
 .choice-btn {
   width: 300px;

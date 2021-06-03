@@ -5,7 +5,7 @@ var introEl = document.getElementById('intro-content');
 var beginQuizEl = document.getElementById('begin-quiz');
 var answersEl = document.getElementById('answers');
 var responseEl = document.querySelector('.response');
-var scoreEl = document.getElementById('your-score');
+var scoreEl = document.querySelector('#your-score');
 var highScoreEl = document.getElementById('high-scores');
 var scoreBtns = document.querySelector('.score-buttons');
 var initials = document.getElementById('initials');
@@ -162,22 +162,23 @@ var endQuiz = function() {
   questionsEl.textContent = "FINISHED!"
   scoreEl.innerHTML = 
   `<p>Your final score is ` + score + `</p>
-    <div class='initials-form' id='initials-input'>
+    <form class='initials-form' id='initials-input'>
       <p>Enter initials here:</p>
     <input type='text' name='initials' id='initials' placeholder='Your initials'></input>
-    <button class='submit-btn' id='submit-btn'>SUBMIT</button>`;
+    <button type='button' value='submit' class='submit-btn' id='your-score'>SUBMIT</button></form>`;
 };
 
 // SCORES
 var getScore = function(event) {
   event.preventDefault();
+  // console.log(event)
   var yourInitials = document.querySelector("input[name='initials']").value;
-    if (!yourInitials) {
-      alert("Your initials are required to continue.")
-      return false;
-    }
+    // if (!yourInitials) {
+    //   alert("Your initials are required to continue.")
+    //   return false;
+    // }
 
-  var savedScores = localStorage.getItem("quizScores");
+  var savedScores = window.localStorage.getItem("quizScores");
 
   var scoreData = {
     name: yourInitials,
@@ -186,14 +187,14 @@ var getScore = function(event) {
 
   if (!savedScores) {
     highScoreList.push(scoreData);
-    savedScores();
+    saveScores();
     clearPages();
     return viewHighScores();
   } else {
     highScoreList = JSON.parse(savedScores);
     if (highScoreList.length < 1) {
       highScoreList.push(scoreData);
-      savedScores();
+      saveScores();
       clearPages();
       return viewHighScores();
     }
@@ -202,12 +203,12 @@ var getScore = function(event) {
       if (highScoreList[i].score < scoreData.score) {
         highScoreList.splice(i, 0, scoreData);
         highScoreList = highScoreList.slice(0.5);
-        savedScores();
+        saveScores();
         break;
       } else if (i === (highScoreList.length - 1)) {
           highScoreList.push(scoreData);
           highScoreList = highScoreList.slice(0,5);
-          savedScores();
+          saveScores();
           break;
       }
     }
@@ -217,7 +218,7 @@ var getScore = function(event) {
 };
 
 var saveScores = function() {
-  localStorage.setItem("quizScores", JSON.stringify(highScoreList));
+  window.localStorage.setItem("quizScores", JSON.stringify(highScoreList));
 
 };
 
@@ -236,7 +237,7 @@ var viewHighScores = function() {
   highScoreEl.innerHTML = "";
   timerEl.innerHTML = "";
 
-  var savedHighScores = localStorage.getItem("quizScores");
+  var savedHighScores = window.localStorage.getItem("quizScores");
     highScoreList = JSON.parse(savedHighScores);
     questionsEl = document.createElement("h2");
     questionsEl.id = "question";
@@ -254,7 +255,7 @@ var viewHighScores = function() {
         class = 'score-button'
         id = 'back'>GO BACK</button>
       <button type ='button'
-        class = 'score-buttons'
+        class = 'score-button'
         id = 'clear'>CLEAR</button>`;
 };
 
@@ -314,7 +315,7 @@ var startTimer = function() {
 // EVENT LISTENERS
 viewHighScoreEl.addEventListener("click", scoresLink);
 scoreBtns.addEventListener("click", chooseBtn)
-scoreEl.addEventListener("submit", getScore);
+scoreEl.addEventListener("click", getScore);
 answersEl.addEventListener("click", answerList);
 beginQuizEl.addEventListener("click", verifyClick);
 
