@@ -189,7 +189,6 @@ var getScore = function(event) {
     highScoreList.push(scoreData);
     saveScores();
     clearPages();
-    return viewHighScores();
   } else {
     highScoreList = JSON.parse(savedScores);
     if (highScoreList.length < 1) {
@@ -315,7 +314,7 @@ var startTimer = function() {
 // EVENT LISTENERS
 viewHighScoreEl.addEventListener("click", scoresLink);
 scoreBtns.addEventListener("click", chooseBtn)
-scoreEl.addEventListener("click", getScore);
+scoreEl.addEventListener("submit", getScore);
 answersEl.addEventListener("click", answerList);
 beginQuizEl.addEventListener("click", verifyClick);
 
