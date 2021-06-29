@@ -8,7 +8,7 @@ var responseEl = document.querySelector(".response");
 var scoreEl = document.getElementById('your-score');
 var highScoreEl = document.getElementById('high-scores');
 var scoreBtns = document.querySelector('.score-buttons');
-var initials = document.getElementById("initials")
+var initials = document.getElementById('initials');
 
 // TIMER
 var timer = 60;
@@ -63,9 +63,9 @@ var questions = [
 
 // INTRO PAGE
 var introPage = function() {
+  viewHighScoreEl.innerHTML = "<p>VIEW HIGH SCORES</p>";
   timer = 60;
-  timerEl.innerHTML = "<p> Time Remaining: " + timer + "</p>"
-  highScoreEl.innerHTML = '<p>VIEW HIGH SCORES</p>';
+  timerEl.innerHTML = "<p>Time: " + timer + "</p>";
 
   var createTitle = document.createElement('h1');
     createTitle.id = "welcome-title";
@@ -86,7 +86,7 @@ var introPage = function() {
 // BEGINNING THE QUIZ / VIEWING QUESTIONS
 var beginQuiz = function() {
   clearPages();
-  questionsEl = document.createElement('h2');
+  questionsEl = document.createElement("h2");
   questionsEl.id = "questions";
   introEl.appendChild(questionsEl);
     choice1 = document.createElement("button");
@@ -113,7 +113,7 @@ var beginQuiz = function() {
   showQuestion(timerNum);
 };
 
-var showQuestion = function() {
+var showQuestion = function(i) {
   questionsEl.textContent = questions[i].question;
   choice1.textContent = questions[i].choice1;
   choice2.textContent = questions[i].choice2;
@@ -127,6 +127,7 @@ var answerList = function(event) {
       var answerId = event.target.id;
         feedbackEl = document.createElement("p");
         feedbackEl.id = "feedback";
+        responseEl.appendChild(feedbackEl);
         if (answerId === questions[timerNum].ca) {
           feedbackEl.textContent = "Correct";
         } else {
@@ -135,7 +136,7 @@ var answerList = function(event) {
         }
         setTimeout(() => {
           feedbackEl.remove();
-        }, 500);
+        }, 800);
         timerNum++;
         if (timerNum >= questions.length) {
           return endQuiz();
@@ -157,11 +158,12 @@ var endQuiz = function() {
   choice2.remove();
   choice3.remove();
   choice4.remove();
+  responseEl.remove();
 
   questionsEl.textContent = "FINISHED!"
   scoreEl.innerHTML = 
-  `<p> Your final score is " + score + "</p>
-    <div class='initials-form' id='initials-input'>
+  `<p>Your final score is ` + score + `</p>
+    <form class='initials-form' id='initials-input'>
       <p>Enter initials here:</p>
       <input 
         type='text' 
@@ -188,7 +190,7 @@ var getScore = function(event) {
     //   return false;
     // }
 
-  var savedScores = localStorage.getItem("quizScores");
+  var savedScores = window.localStorage.getItem("quizScores");
 
   var scoreData = {
     name: getInitials(),
@@ -199,7 +201,6 @@ var getScore = function(event) {
     highScoreList.push(scoreData);
     saveScores();
     clearPages();
-    return viewHighScores();
   } else {
     highScoreList = JSON.parse(savedScores);
     if (highScoreList.length < 1) {
@@ -228,12 +229,12 @@ var getScore = function(event) {
 };
 
 var saveScores = function() {
-  localStorage.setItem("quizScores", JSON.stringify(highScoreList));
+  window.localStorage.setItem("quizScores", JSON.stringify(highScoreList));
 
 };
 
 var clearPages = function() {
-  highscoreEl.innerHTML = "";
+  viewHighScoreEl.innerHTML = "";
   responseEl.innerHTML = "";
   beginQuizEl.innerHTML = "";
   answersEl.innerHTML = "";
@@ -247,7 +248,7 @@ var viewHighScores = function() {
   highScoreEl.innerHTML = "";
   timerEl.innerHTML = "";
 
-  var savedHighScores = localStorage.getItem("quizScores");
+  var savedHighScores = window.localStorage.getItem("quizScores");
     highScoreList = JSON.parse(savedHighScores);
     questionsEl = document.createElement("h2");
     questionsEl.id = "question";
@@ -265,7 +266,7 @@ var viewHighScores = function() {
         class = 'score-button'
         id = 'back'>GO BACK</button>
       <button type ='button'
-        class = 'score-buttons'
+        class = 'score-button'
         id = 'clear'>CLEAR</button>`;
 };
 
@@ -275,6 +276,11 @@ var chooseBtn = function(event) {
     saveScores();
     clearPages();
     viewHighScores();
+  }
+
+  if (event.target.matches("#back")) {
+    clearPages();
+    introPage();
   }
 };
 

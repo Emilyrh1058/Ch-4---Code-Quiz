@@ -4,8 +4,8 @@
   box-sizing: border-box;
 }
 :root {
-  --color1: #360a69;
-  --color2: #cd45e9;
+  --color1: #0482b4;
+  --color2: #0300af;
   --color3: #8d8d8d;
   --color4: #ffffff;
 }
@@ -31,6 +31,7 @@ header {
 .intro-title h1 {
   font-size: 54px;
   text-align: center;
+  text-decoration: underline;
 }
 .intro-title h2 {
   font-size: 48px;
@@ -46,7 +47,7 @@ header {
   padding: 30px 15px 0 15px;
   text-align: center;
 }
-.score-button, .choice-btn, .startQuizBtn, .submit-btn {
+.score-button, .choice-btn, .submit-btn {
   display: flex;
   padding: 5px 20px;
   font-size: 32px;
@@ -56,10 +57,17 @@ header {
   border: solid 5px var(--color1);
   border-radius: 8px;
 }
-.startQuizBtn {
+.begin-button {
   width: 200px;
   justify-content: center;
   margin: 40px 0;
+  display: flex;
+  padding: 5px 20px;
+  font-size: 25px;
+  background-color: var(--color1);
+  color: var(--color4);
+  border: solid 5px var(--color1);
+  border-radius: 8px;
 }
 .choice-btn {
   width: 300px;
@@ -95,7 +103,7 @@ header {
 }
 .scores-wrapper h3 {
   width: 100%;
-  background-color: var(--color3);
+  background-color: var(--color4);
   font-size: 32px;
   padding: 5px 10px;
 }
@@ -250,220 +258,3 @@ header {
       font-size: 20px;
   }
 }
-
-
-/* body {
-  background-color: grey;
-}
-
-.welcome h1 {
-  background-color: black;
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
-  text-align: center;
-  /* margin: auto;
-  width: 100%;
-  height: 100%;
-}
-
-.intro {
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.intro button {
-  margin: 0;
-  top: 25%;
-  left: 50%;
-  padding: 10px 16px;
-  background-color: black;
-}
-
-
-#answer-container {
-    display: block;
-}
-.hide {
-  display: none;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-#questions {
-  display: none;
-}
-
-#intro {
-  display: block;
-  width: 80%;
-}
-
-.answer {
-  display: block;
-  width: 100%;
-  height: 100%;
-  padding: 25px 30px;
-}
-
-header {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  padding: 20px;
-  padding-top: 0px;
-  color: hsl(206, 17%, 28%);
-}
-
-.intro-title a,
-ul a {
-  color: black;
-  font-size: 24px;
-}
-
-.info_box,
-.log,
-.finale,
-.tryAgain {
-  background-color: hsl(0, 0%, 100%);
-  border-radius: 5px;
-  border-width: 1px;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px 0px;
-  color: hsl(206, 17%, 28%);
-  margin: 30px auto;
-  max-width: 800px;
-  padding: 30px 40px;
-  height: 500px;
-  text-align: center;
-}
-
-#log {
-  display: none;
-}
-
-#tryAgain {
-  display: none;
-}
-
-.banner,
-.ques_text {
-  font-size: 36px;
-  padding-bottom: 40px;
-}
-
-.description {
-  font-size: 24px;
-  padding: 20px 10px;
-}
-
-.start {
-  justify-content: bottom;
-}
-
-button {
-  border: none;
-  padding: 10px 20px;
-  font-size: 24px;
-  font-weight: bold;
-  background-color: black;
-  color: white;
-  border-radius: 10px;
-  margin: 40px 20px;
-}
-
-button:hover {
-  background: white;
-  color: black;
-  border: solid;
-  border-radius: 25px;
-  text-shadow: none;
-}
-
-.question_text h2 {
-  padding-bottom: 10px;
-}
-
-.option {
-  background: lightsteelblue;
-  border: 1px solid black;
-  border-radius: 5px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  transition: all 0.5s ease;
-}
-
-.option:hover {
-  background: aliceblue;
-}
-
-#time {
-  font-size: 36px;
-  font-weight: bold;
-  color: black;
-}
-
-#score {
-  font-size: 36px;
-  font-weight: bold;
-  padding-bottom: 30px;
-}
-
-#highScore {
-  font-size: 30px;
-  padding-bottom: 20px;
-}
-
-.enter {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  font-size: 24px;
-  font-weight: bold;
-  padding-bottom: 15px;
-}
-
-#initials {
-  padding: 20px;
-  margin: 40px 200px;
-  text-align: center;
-}
-
-.finale {
-  display: none;
-}
-
-.yourBest {
-  padding-bottom: 15px;
-}
-
-.finalLog {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  font-size: 28px;
-  border-bottom: 1px solid;
-  border-width: 100%;
-  margin: 10px 25px;
-  list-style-type: none;
-}
-
-#scores {
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.yourScores {
-  display: flex;
-  flex: 0 0 50%;
-}
-
-.yourInitials {
-  display: flex;
-} */
