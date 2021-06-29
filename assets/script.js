@@ -1,12 +1,12 @@
 // DOM
-var timerEl = document.getElementById('#timer');
-var highscoreEl = document.getElementById('#show-high-score');
-var introEl = document.getElementById('#intro-content');
-var beginQuizEl = document.getElementById('#begin-quiz');
-var answerEl = document.getElementById("#answers");
-var responseEl = document.querySelector(".feedback");
-var scoreEl = document.getElementById('#your-score');
-var highScoreEl = document.getElementById('#high-scores');
+var timerEl = document.getElementById('timer');
+var highscoreEl = document.getElementById('show-high-scores');
+var introEl = document.getElementById('intro-content');
+var beginQuizEl = document.getElementById('begin-quiz');
+var answersEl = document.getElementById("answers");
+var responseEl = document.querySelector(".response");
+var scoreEl = document.getElementById('your-score');
+var highScoreEl = document.getElementById('high-scores');
 var scoreBtns = document.querySelector('.score-buttons');
 var initials = document.getElementById("initials")
 
@@ -15,7 +15,7 @@ var timer = 60;
 var timerNum = 0;
 var score = 0;
 var highScoreList = [];
-
+var i = 0;
 
 // QUESTIONS
 var questions = [
@@ -92,22 +92,22 @@ var beginQuiz = function() {
     choice1 = document.createElement("button");
     choice1.className = "choice-btn";
     choice1.id = "c1";
-    answerEl.appendChild(choice1);
+    answersEl.appendChild(choice1);
 
     choice2 = document.createElement("button");
     choice2.className = "choice-btn";
     choice2.id = "c2";
-    answerEl.appendChild(choice2);
+    answersEl.appendChild(choice2);
 
     choice3 = document.createElement("button");
     choice3.className = "choice-btn";
     choice3.id = "c3";
-    answerEl.appendChild(choice3);
+    answersEl.appendChild(choice3);
 
     choice4 = document.createElement("button");
     choice4.className = "choice-btn";
     choice4.id = "c4";
-    answerEl.appendChild(choice4);
+    answersEl.appendChild(choice4);
 
   timerNum = 0;
   showQuestion(timerNum);
@@ -140,6 +140,7 @@ var answerList = function(event) {
         if (timerNum >= questions.length) {
           return endQuiz();
         }
+        i++
         showQuestion(timerNum);
     }
   }
@@ -168,36 +169,42 @@ var endQuiz = function() {
         id='initials' 
         placeholder='Your initials'
       />
+    </div> 
     <button class='submit-btn'>SUBMIT</button>`;
 };
+
+var getInitials = function() {
+  var yourInitials = document.getElementsByName('initials')[0].value;
+  console.log(yourInitials)
+  return yourInitials;
+}
+
 
 // SCORES
 var getScore = function(event) {
   event.preventDefault();
-
-  var yourInitials = document.querySelector("input[name='initials']").value;
-    if (!yourInitials) {
-      alert("Your initials are required to continue.")
-      return false;
-    }
+    // if (!yourInitials) {
+    //   alert("Your initials are required to continue.")
+    //   return false;
+    // }
 
   var savedScores = localStorage.getItem("quizScores");
 
   var scoreData = {
-    name: yourInitials,
+    name: getInitials(),
     score: score
   }
 
   if (!savedScores) {
     highScoreList.push(scoreData);
-    savedScores();
+    saveScores();
     clearPages();
     return viewHighScores();
   } else {
     highScoreList = JSON.parse(savedScores);
     if (highScoreList.length < 1) {
       highScoreList.push(scoreData);
-      savedScores();
+      saveScores();
       clearPages();
       return viewHighScores();
     }
@@ -206,12 +213,12 @@ var getScore = function(event) {
       if (highScoreList[i].score < scoreData.score) {
         highScoreList.splice(i, 0, scoreData);
         highScoreList = highScoreList.slice(0.5);
-        savedScores();
+        saveScores();
         break;
       } else if (i === (highScoreList.length - 1)) {
           highScoreList.push(scoreData);
           highScoreList = highScoreList.slice(0,5);
-          savedScores();
+          saveScores();
           break;
       }
     }
@@ -229,7 +236,7 @@ var clearPages = function() {
   highscoreEl.innerHTML = "";
   responseEl.innerHTML = "";
   beginQuizEl.innerHTML = "";
-  answerEl.innerHTML = "";
+  answersEl.innerHTML = "";
   scoreEl.innerHTML = "";
   introEl.innerHTML = "";
   scoreBtns.innerHTML = "";
@@ -286,7 +293,7 @@ var scoresLink = function() {
 var verifyClick = function(event) {
   if (event.target.matches(".begin-button")) {
     startTimer();
-    startQuiz();
+    beginQuiz();
   } else {
     return false;
   }
@@ -312,11 +319,11 @@ var startTimer = function() {
 
 // EVENT LISTENERS
 
-highscoreEl.addEventListener("click", scoresLink);
+highScoreEl.addEventListener("click", scoresLink);
 scoreBtns.addEventListener("click", chooseBtn)
-scoreEl.addEventListener("submit", getScore);
+scoreEl.addEventListener("click", getScore);
 answersEl.addEventListener("click", answerList);
 beginQuizEl.addEventListener("click", verifyClick);
 
-initialScreen();
+introPage();
 
