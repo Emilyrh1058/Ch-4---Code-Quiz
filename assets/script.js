@@ -63,7 +63,7 @@ var questions = [
 
 // INTRO PAGE
 var introPage = function() {
-  viewHighScoreEl.innerHTML = "<p>VIEW HIGH SCORES</p>";
+  highscoreEl.innerHTML = "<p>VIEW HIGH SCORES</p>";
   timer = 60;
   timerEl.innerHTML = "<p>Time: " + timer + "</p>";
 
@@ -162,7 +162,7 @@ var endQuiz = function() {
 
   questionsEl.textContent = "FINISHED!"
   scoreEl.innerHTML = 
-  `<p>Your final score is ` + score + `</p>
+  `<p>Your final score is ${score}</p>
     <form class='initials-form' id='initials-input'>
       <p>Enter initials here:</p>
       <input 
@@ -171,8 +171,8 @@ var endQuiz = function() {
         id='initials' 
         placeholder='Your initials'
       />
-    </div> 
-    <button class='submit-btn'>SUBMIT</button>`;
+      <button class='submit-btn'>SUBMIT</button>
+    </form>`;
 };
 
 var getInitials = function() {
@@ -234,7 +234,7 @@ var saveScores = function() {
 };
 
 var clearPages = function() {
-  viewHighScoreEl.innerHTML = "";
+  highScoreEl.innerHTML = "";
   responseEl.innerHTML = "";
   beginQuizEl.innerHTML = "";
   answersEl.innerHTML = "";
@@ -327,7 +327,7 @@ var startTimer = function() {
 
 highScoreEl.addEventListener("click", scoresLink);
 scoreBtns.addEventListener("click", chooseBtn)
-scoreEl.addEventListener("click", getScore);
+scoreEl.addEventListener("submit", getScore);
 answersEl.addEventListener("click", answerList);
 beginQuizEl.addEventListener("click", verifyClick);
 
